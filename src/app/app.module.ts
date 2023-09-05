@@ -11,6 +11,8 @@ import { ConsultaDeleteComponent } from './components/consulta-delete/consulta-d
 import { ConsultaUpdateComponent } from './components/consulta-update/consulta-update.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { BibleService } from './services/bible.service';
+import { BibleRepository } from './services/bible.repository';
 
 
 @NgModule({
@@ -29,7 +31,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [BibleService, BibleRepository],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
