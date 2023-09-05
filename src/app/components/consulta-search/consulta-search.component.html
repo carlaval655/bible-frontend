@@ -1,0 +1,17 @@
+<form #miFormulario="ngForm" (submit)="crearConsulta()">
+  <label for="Libro">Libro:</label>
+  <input type="text" id="libro" name="libro" [(ngModel)]="verse.libro" required>
+
+  <label for="capitulo">Capitulo:</label>
+  <input type="text" id="capitulo" name="capitulo" [(ngModel)]="verse.capitulo" required>
+
+  <label for="versiculo">Versiculo:</label>
+  <input type="text" id="versiculo" name="versiculo" [(ngModel)]="verse.versiculo" required>
+
+  <label for="texto">Texto:</label>
+  <input type="text" id="texto" name="texto" [(ngModel)]="verse.texto" required>
+
+  <!-- Otros campos del formulario -->
+
+  <button type="submit">Guardar</button>
+</form>
