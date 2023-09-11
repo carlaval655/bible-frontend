@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { BibleRepository, Verse} from 'src/app/services/bible.repository';
+import { Component, Inject, inject } from '@angular/core';
+import { BibleRepository} from 'src/app/services/bible.repository';
 import { BibleService } from 'src/app/services/bible.service';
+import { Verse } from 'src/app/models/Verse';
 
 
 @Component({
@@ -9,28 +10,32 @@ import { BibleService } from 'src/app/services/bible.service';
   styleUrls: ['./consulta-search.component.css']
 })
 export class ConsultaSearchComponent {
-  bibleService: BibleService = inject(BibleService);
-  verses$ = inject(BibleRepository).verses$;
-verses: Verse[] = [];
-  verse: Verse = {
-    id: 9,
-    libro: '',
-    capitulo: 0,
-    versiculo: 0,
-    texto: '',
-    fechaConsulta: new Date()
+  private bibleService= inject(BibleService)
+    private bibleRepository= inject(BibleRepository)
+  verses = this.bibleRepository.verses$
+    libro= "";
+    capitulo= 0
+    versiculo= 0
+    texto= "" as any;
 
-  };
-    constructor() { }
-  
     ngOnInit(): void {
     }
 
     crearConsulta() {
       console.log('Creando consulta desde el componente');
-      console.log(this.verse);
-      this.bibleService.agregarConsulta(this.verse);
+      this.bibleService.agregarConsulta(this.libro, this.capitulo,this.versiculo).subscribe(
+        (response) => {
+          console.log(response);
+          this.texto = response.text;
+          //this.verse.texto = response.texto;
+          
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
 
     }
+
 
 }

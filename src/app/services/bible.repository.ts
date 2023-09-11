@@ -8,15 +8,7 @@ import {
   withEntities,
 } from '@ngneat/elf-entities';
 import { joinRequestResult } from '@ngneat/elf-requests';
-
-export interface Verse {
-  id: number;
-  libro: string;
-  capitulo: number;
-  versiculo: number;
-  texto: string;
-  fechaConsulta: Date;
-}
+import { Verse } from '../models/Verse';
 
 const store = createStore({ name: 'verses' }, withEntities<Verse>());
 
