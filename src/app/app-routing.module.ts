@@ -6,14 +6,17 @@ import { ConsultaDetailComponent } from './components/consulta-detail/consulta-d
 import { ConsultaSearchComponent } from './components/consulta-search/consulta-search.component';
 import { ConsultaDeleteComponent } from './components/consulta-delete/consulta-delete.component';
 import { ConsultaUpdateComponent } from './components/consulta-update/consulta-update.component';
+import { AuthGuard } from './security/auth-guard.guard';
+import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/consultas', pathMatch: 'full' },
+  { path: '',component: ConsultasListComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
   { path: 'consultas', component: ConsultasListComponent },
   { path: 'consulta/info', component: ConsultaDetailComponent },
   { path: 'consulta/create', component: ConsultaSearchComponent },
   { path: 'consulta/delete', component: ConsultaDeleteComponent },
   { path: 'consulta/update', component: ConsultaUpdateComponent },
+  {path: 'NoAutorizado', component: NoAutorizadoComponent}
 ];
 
 @NgModule({

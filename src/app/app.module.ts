@@ -1,4 +1,3 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +15,26 @@ import { BibleRepository } from './services/bible.repository';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule} from '@angular/material/paginator';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { KeycloakAngularModule, KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.component';
 
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: 'http://localhost:8080',
+        realm: 'prueba_arquitectura',
+        clientId: 'bible-client'
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      }
+    });
+}
 
 @NgModule({
   declarations: [
@@ -26,7 +44,8 @@ import { MatPaginatorModule} from '@angular/material/paginator';
     ConsultaSearchComponent,
     ConsultaDeleteComponent,
     ConsultaUpdateComponent,
-    NavbarComponent
+    NavbarComponent,
+    NoAutorizadoComponent
   ],
   imports: [
     BrowserModule,
@@ -36,8 +55,16 @@ import { MatPaginatorModule} from '@angular/material/paginator';
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
+    KeycloakAngularModule
   ],
-  providers: [BibleService, BibleRepository],
+  providers: [BibleService, BibleRepository,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
