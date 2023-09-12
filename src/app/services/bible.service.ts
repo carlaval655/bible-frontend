@@ -15,7 +15,7 @@ export class BibleService {
   // Método para agregar una nueva consulta
   agregarConsulta(libro: string, capitulo: number, versiculo: number): Observable<Verse> {
     console.log('Agregando consulta');
-    return this.http.get<Verse>(`http://192.168.0.104:8080/api/v1/bible/verse?book=${libro}&chapter=${capitulo}&verse=${versiculo}`)
+    return this.http.get<Verse>(`http://172.18.15.240:8008/api/v1/bible/verse?book=${libro}&chapter=${capitulo}&verse=${versiculo}`)
       .pipe(
         //map((response) => this.transformarRespuesta(response)),
         tap((verse) => {
@@ -23,6 +23,37 @@ export class BibleService {
           console.log('CONSULTA AGREGADA');
           console.log(verse);
         }),
+        //trackRequestResult(['verse'])
+      );
+  }
+
+  // Método para obtener todas las consultas
+  obtenerConsultas(): Observable<Verse[]> {
+    console.log('Obteniendo consultas');
+    return this.http.get<Verse[]>(`http://172.18.15.240:8008/api/v1/bible/request`)
+      .pipe(
+        //map((response) => this.transformarRespuesta(response)),
+        tap((verses) => {
+          this.bibleRepo.setVerses(verses);
+          console.log('CONSULTAS OBTENIDAS');
+          console.log(verses);
+        }
+        ),
+        //trackRequestResult(['verses'])
+      );
+  }
+
+  obtenerConsultaporId(id: number): Observable<Verse> {
+    console.log('Obteniendo consultas');
+    return this.http.get<Verse>(`http://`)
+      .pipe(
+        //map((response) => this.transformarRespuesta(response)),
+        tap((verse) => {
+          console.log('CONSULTA OBTENIDA');
+          console.log(verse);
+        }
+        ),
+        //trackRequestResult(['verses'])
       );
   }
 }

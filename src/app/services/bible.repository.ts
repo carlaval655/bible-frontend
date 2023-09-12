@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createStore } from '@ngneat/elf';
+import { createStore, withProps } from '@ngneat/elf';
 import {
   selectAllEntities,
   selectEntity,
@@ -9,12 +9,27 @@ import {
 } from '@ngneat/elf-entities';
 import { joinRequestResult } from '@ngneat/elf-requests';
 import { Verse } from '../models/Verse';
+import { state } from '@angular/animations';
 
-const store = createStore({ name: 'verses' }, withEntities<Verse>());
+export interface VerseProps{
+  totalElements: number;
+  totalPages: number;
+  currentPage: number;
+}
+
+const store = createStore(
+  { name: 'verses' }, 
+  withProps<VerseProps>({ totalElements: 0, totalPages: 0, currentPage: 0}),
+  withEntities<Verse>()
+  );
 
 @Injectable({ providedIn: 'root' })
 export class BibleRepository {
   verses$ = store.pipe(selectAllEntities(), joinRequestResult(['verses']));
+
+  getVerseProps() {
+    return store.query(state => state);
+  }
 
   getVerse(id: Verse['id']) {
     return store.pipe(selectEntity(id), joinRequestResult(['verses', id]));
@@ -39,6 +54,7 @@ export class BibleRepository {
   setVerses(verses: Verse[]) {
     store.update(setEntities(verses));
   }
+
 
 
 

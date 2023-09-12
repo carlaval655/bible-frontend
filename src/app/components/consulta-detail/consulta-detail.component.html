@@ -1,1 +1,37 @@
-<p>consulta-detail works!</p>
+<div class="container">
+    <h2>Currency Conversion History</h2>
+  
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+        <mat-cell *matCellDef="let verse"> {{ verse.id }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="book">
+        <mat-header-cell *matHeaderCellDef> Book </mat-header-cell>
+        <mat-cell *matCellDef="let verse"> {{ verse.book }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="chapter">
+        <mat-header-cell *matHeaderCellDef> Chapter </mat-header-cell>
+        <mat-cell *matCellDef="let verse"> {{ verse.chapter }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="verse">
+        <mat-header-cell *matHeaderCellDef> Verse </mat-header-cell>
+        <mat-cell *matCellDef="let verse"> {{ verse.verse }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="text">
+        <mat-header-cell *matHeaderCellDef> Text </mat-header-cell>
+        <mat-cell *matCellDef="let verse"> {{ verse.text }} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+        <mat-cell *matCellDef="let verse"> {{ verse.date }} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>

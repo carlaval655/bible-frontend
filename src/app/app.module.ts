@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { BibleService } from './services/bible.service';
 import { BibleRepository } from './services/bible.repository';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [BibleService, BibleRepository],
   bootstrap: [AppComponent]
