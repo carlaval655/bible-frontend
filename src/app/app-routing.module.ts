@@ -10,12 +10,12 @@ import { AuthGuard } from './security/auth-guard.guard';
 import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.component';
 
 const routes: Routes = [
-  { path: '',component: ConsultasListComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
-  { path: 'consultas', component: ConsultasListComponent },
-  { path: 'consulta/info', component: ConsultaDetailComponent },
-  { path: 'consulta/create', component: ConsultaSearchComponent },
-  { path: 'consulta/delete', component: ConsultaDeleteComponent },
-  { path: 'consulta/update', component: ConsultaUpdateComponent },
+  { path: '',component: ConsultasListComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  { path: 'consultas', component: ConsultasListComponent, canActivate: [AuthGuard], data: { roles: ['admin'] }},
+  { path: 'consulta/info', component: ConsultaDetailComponent,canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  { path: 'consulta/create', component: ConsultaSearchComponent,canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  { path: 'consulta/delete', component: ConsultaDeleteComponent,canActivate: [AuthGuard], data: { roles: ['admin'] } },
+  { path: 'consulta/update', component: ConsultaUpdateComponent,canActivate: [AuthGuard], data: { roles: ['admin'] } },
   {path: 'NoAutorizado', component: NoAutorizadoComponent}
 ];
 
