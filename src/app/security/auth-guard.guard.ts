@@ -45,6 +45,5 @@ export class AuthGuard extends KeycloakAuthGuard {
     const auhorized = requiredRoles.every((role) => this.roles.includes(role));
     if (!auhorized) this.router.navigate(['NoAutorizado']);
     return auhorized;
-
   }
 }

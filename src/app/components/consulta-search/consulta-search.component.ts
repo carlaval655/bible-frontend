@@ -13,6 +13,8 @@ export class ConsultaSearchComponent {
   private bibleService= inject(BibleService)
     private bibleRepository= inject(BibleRepository)
   verses = this.bibleRepository.verses$
+  private versesMemento: any = [];
+    currentIndex = -1;
     libro= "";
     capitulo= 0
     versiculo= 0
@@ -28,6 +30,9 @@ export class ConsultaSearchComponent {
           console.log(response);
           this.texto = response.text;
           //this.verse.texto = response.texto;
+          this.versesMemento.push({ libro: this.libro, capitulo: this.capitulo, versiculo: this.versiculo, texto: this.texto });
+          console.log(this.versesMemento);
+          this.currentIndex = this.versesMemento.length - 1;
           
         },
         (error) => {
@@ -37,5 +42,44 @@ export class ConsultaSearchComponent {
 
     }
 
-
+    cargarAnterior() {
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+        console.log("Imprimiendo posicion:"+this.currentIndex);
+        const consultaAnterior = this.versesMemento[this.currentIndex];
+        this.libro = consultaAnterior.libro;
+        this.capitulo = consultaAnterior.capitulo;
+        this.versiculo = consultaAnterior.versiculo;
+        this.texto = consultaAnterior.texto;
+     }
+      //this.habilitarBotones();
+    }
+  
+    cargarSiguiente() {
+      if (this.currentIndex < this.versesMemento.length - 1) {
+        this.currentIndex++;
+        console.log("Imprimiendo posicion:"+this.currentIndex);
+        const consultaSiguiente = this.versesMemento[this.currentIndex];
+        this.libro = consultaSiguiente.libro;
+        this.capitulo = consultaSiguiente.capitulo;
+        this.versiculo = consultaSiguiente.versiculo;
+        this.texto = consultaSiguiente.texto;
+      }
+      //this.habilitarBotones();
+    }
+    
+    // habilitarBotones() {
+    //   const anterior = document.getElementById('anterior');
+    //   const siguiente = document.getElementById('siguiente');
+    //   if (this.currentIndex === 0) {
+    //     anterior?.setAttribute('disabled', 'true');
+    //   } else {
+    //     anterior?.removeAttribute('disabled');
+    //   }
+    //   if (this.currentIndex === this.versesMemento.length - 1) {
+    //     siguiente?.setAttribute('disabled', 'true');
+    //   } else {
+    //     siguiente?.removeAttribute('disabled');
+    //   }
+    // }
 }

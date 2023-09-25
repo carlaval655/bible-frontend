@@ -39,7 +39,7 @@
     }
   
     .toolbar {
-      position: absolute;
+      /* position: absolute; */
       top: 0;
       left: 0;
       right: 0;
@@ -311,12 +311,12 @@
     <img src="https://i.ibb.co/y0RYd5z/pngwing-com.png" alt="biblia" style="height: 50px; width: 50px;">
     <span>Buscador de versiculos</span>
       <div class="spacer"></div>
-      <button mat-raised-button routerLink="/">Buscador</button>
+      <!-- <button mat-raised-button routerLink="/">Buscador</button> -->
       <button mat-raised-button routerLink="/list">Listado de versiculos</button>
     <button mat-raised-button routerLink="/create">Buscar nuevo verso</button>
-        <button mat-raised-button routerLink="/update">Actualizar</button>
-        <button mat-raised-button routerLink="/delete">Eliminar</button>
-        <button mat-raised-button routerLink="/search">Buscar por id</button>
+        <button mat-raised-button routerLink="/update">No autorizado</button>
+        <!-- <button mat-raised-button routerLink="/delete">Eliminar</button>
+        <button mat-raised-button routerLink="/search">Buscar por id</button> -->
       <button mat-raised-button color="primary" (click)="logout()">Logout</button>
   </div>
   <router-outlet></router-outlet>
