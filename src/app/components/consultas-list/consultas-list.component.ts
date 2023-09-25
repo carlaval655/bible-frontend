@@ -4,23 +4,37 @@ import { BibleRepository } from 'src/app/services/bible.repository';
 import { BibleService } from 'src/app/services/bible.service';
 import {MatTableDataSource} from "@angular/material/table";
 import { Verse } from 'src/app/models/Verse';
+import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-consultas-list',
   templateUrl: './consultas-list.component.html',
   styleUrls: ['./consultas-list.component.css']
 })
 export class ConsultasListComponent {
+
+  title = 'software';
+  test = 'prueba';
+  page = 0;
+  size = 10;
+  sort = "id";
+  asc = true;
+
+  isFirst = false;
+  isLast = false;
   bibleService = inject(BibleService);
   bibleRepository = inject(BibleRepository);
-  // @ts-ignore
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  
+
   dataSource: MatTableDataSource<Verse> = new MatTableDataSource<Verse>([]);
   displayedColumns: string[] = ['id', 'book', 'chapter', 'verse', 'text', 'date'];
   verses$ = this.bibleRepository.verses$;
+
+  // MatPaginator Inputs
   maxSize: number= 0;
   isLoading: boolean = false;
+  pageIndex: number = 0;
   constructor() {
-    this.bibleService.obtenerConsultas().subscribe();
+    this.bibleService.obtenerConsultas(0, 5).subscribe();
   }
 
   ngOnInit() {
@@ -33,11 +47,17 @@ export class ConsultasListComponent {
         this.dataSource.data =  response.data;
       });
   }
+  retroceder(){
+    if(this.page > 0){
+      this.page--;
+      this.bibleService.obtenerConsultas(this.page, 5).subscribe();
+    }
+  }
 
-  pageChangeEvent($event: PageEvent) {
-    console.log($event);
-    //this.bibleService.obtenerConsultas($event.pageIndex, 5).subscribe();
-    this.bibleService.obtenerConsultas().subscribe();
-
+  avanzar(){
+    if(!this.isLast){
+      this.page++;
+      this.bibleService.obtenerConsultas(this.page, 5).subscribe();
+    }
   }
 }

@@ -35,5 +35,9 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <mat-paginator [pageSizeOptions]="[5]" [length]="maxSize" (page)="pageChangeEvent($event)" showFirstLastButtons></mat-paginator>
-  </div>
+    <tr>
+      <td><button mat-raised-button (click)="retroceder()">Retroceder</button></td>
+      <td colspan="2"></td>
+      <td><button mat-raised-button (click)="avanzar()">Avanzar</button></td>
+    </tr>
+    </div>

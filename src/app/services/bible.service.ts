@@ -6,6 +6,7 @@ import { trackRequestResult } from '@ngneat/elf-requests';
 import { BibleRepository } from './bible.repository';
 import { Verse } from '../models/Verse'
 import { environment } from 'src/environments/environment.development';
+import { Paginator } from '../models/paginator';
 
 @Injectable({
   providedIn: 'root',
@@ -29,15 +30,15 @@ export class BibleService {
   }
 
   // Método para obtener todas las consultas
-  obtenerConsultas(): Observable<Verse[]> {
+  obtenerConsultas(page: number, size:number){
     console.log('Obteniendo consultas');
-    return this.http.get<Verse[]>(`${environment.BACKEND_URL}/api/v1/bible/request`)
+    return this.http.get<Paginator<Verse>>(`${environment.BACKEND_URL}/api/v1/bible/request?page=${page}&size=${size}`)
       .pipe(
         //map((response) => this.transformarRespuesta(response)),
-        tap((verses) => {
-          this.bibleRepo.setVerses(verses);
+        tap((response) => {
+          this.bibleRepo.setVerses(response.content);
           console.log('CONSULTAS OBTENIDAS');
-          console.log(verses);
+          console.log(response);
         }
         ),
         //trackRequestResult(['verses'])
