@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { trackRequestResult } from '@ngneat/elf-requests';
 import { BibleRepository } from './bible.repository';
 import { Verse } from '../models/Verse'
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class BibleService {
   // Método para agregar una nueva consulta
   agregarConsulta(libro: string, capitulo: number, versiculo: number): Observable<Verse> {
     console.log('Agregando consulta');
-    return this.http.get<Verse>(`http://192.168.1.6:8008/api/v1/bible/verse?book=${libro}&chapter=${capitulo}&verse=${versiculo}`)
+    return this.http.get<Verse>(`${environment.BACKEND_URL}/api/v1/bible/verse?book=${libro}&chapter=${capitulo}&verse=${versiculo}`)
       .pipe(
         //map((response) => this.transformarRespuesta(response)),
         tap((verse) => {
@@ -30,7 +31,7 @@ export class BibleService {
   // Método para obtener todas las consultas
   obtenerConsultas(): Observable<Verse[]> {
     console.log('Obteniendo consultas');
-    return this.http.get<Verse[]>(`http://192.168.1.6:8008/api/v1/bible/request`)
+    return this.http.get<Verse[]>(`${environment.BACKEND_URL}/api/v1/bible/request`)
       .pipe(
         //map((response) => this.transformarRespuesta(response)),
         tap((verses) => {

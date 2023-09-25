@@ -20,6 +20,9 @@ import { KeycloakAngularModule, KeycloakAuthGuard, KeycloakService } from 'keycl
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { NoAutorizadoComponent } from './components/no-autorizado/no-autorizado.component';
 
+
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
@@ -55,7 +58,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [BibleService, BibleRepository,
     {

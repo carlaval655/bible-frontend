@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
+  CanActivate,
   Router,
-  RouterStateSnapshot
+  RouterStateSnapshot,
+  UrlTree,
 } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 
@@ -35,20 +37,14 @@ export class AuthGuard extends KeycloakAuthGuard {
     console.log(this.roles)
 
     // Allow the user to proceed if no additional roles are required to access the route.
-    if (!Array.isArray(requiredRoles) || requiredRoles.length === 0 || this.roles.includes('ADMIN')) {
-      console.log('is Admin')
+    if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
       return true;
     }
-    else {
-      console.log('No es Admin')
-      this.router.navigate(['NoAutorizado']);
-      return false;
-    }
-
-
+    
     // Allow the user to proceed if all the required roles are present.
-    //return requiredRoles.every((role) => this.roles.includes(role));
-
+    const auhorized = requiredRoles.every((role) => this.roles.includes(role));
+    if (!auhorized) this.router.navigate(['NoAutorizado']);
+    return auhorized;
 
   }
 }
